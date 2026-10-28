@@ -33,10 +33,10 @@ cask "devpilot-hook" do
 
   binary "devpilot-hook"
 
-  postflight do
+  postflight_steps do
     # cask 也会在 Linux 的 Homebrew 上生成安装块，而 Linux 没有 xattr。
-    if OS.mac?
-      system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/devpilot-hook"]
+    on_macos do
+      run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{staged_path}}/devpilot-hook"]
     end
   end
 
